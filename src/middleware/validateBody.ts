@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { newError, respHandler } from "../utils/respHandler";
 import { AnyZodObject, ZodIssue } from "zod";
+import { logger } from "../utils/logger";
 
 export const validate = (schema: AnyZodObject) => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -8,7 +9,7 @@ export const validate = (schema: AnyZodObject) => {
       await schema.parseAsync(req.body);
       return next();
     } catch (error) {
-      console.log(error);
+      logger.error(error);
       return respHandler({
         req,
         res,
