@@ -1,12 +1,11 @@
-type HandleAsyncType<T> = [T, any];
+import { none, Option } from "./option"
 
 export const handleAsync = async <T>(
   promise: Promise<T>
-): Promise<HandleAsyncType<T>> => {
+): Promise<Option<T>> => {
   try {
-    const data = await promise;
-    return [data, null];
+    return await promise; 
   } catch (error) {
-    return [undefined as T, error];
+    return none
   }
 };
